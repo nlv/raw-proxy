@@ -1,6 +1,9 @@
 module Main where
 
 import Lib
+import Config
 
 main :: IO ()
-main = proxy
+main = do
+  opts <- getOpts
+  proxy (srcPort opts) (destHost opts) (destPort opts)

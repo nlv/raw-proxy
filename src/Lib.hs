@@ -8,11 +8,8 @@ module Lib
 import Network.HTTP.ReverseProxy
 import Data.Conduit.Network
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
-
 proxy :: IO ()
-proxy = runTCPServer (serverSettings 3000 "*") $ \appData ->
+proxy = runTCPServer (serverSettings 4321 "*") $ \appData ->
     rawProxyTo
-        (\_headers -> return $ Right $ ProxyDest "www.example.com" 80)
+        (\_headers -> return $ Right $ ProxyDest "51.68.173.144" 8080)
         appData
