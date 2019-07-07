@@ -8,8 +8,11 @@ module Lib
 import Network.HTTP.ReverseProxy
 import Data.Conduit.Network
 
-proxy :: IO ()
-proxy = runTCPServer (serverSettings 4321 "*") $ \appData ->
+import Data.Text
+import Data.Text.Encoding
+
+proxy :: Int -> Text -> Int -> IO ()
+proxy srcPort dstHost dstPort = runTCPServer (serverSettings srcPort "*") $ \appData ->
     rawProxyTo
-        (\_headers -> return $ Right $ ProxyDest "51.68.173.144" 8080)
+        (\_headers -> return $ Right $ ProxyDest (encodeUtf8 dstHost) dstPort)
         appData
